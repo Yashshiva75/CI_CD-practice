@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checking out code from dev branch..."
-                git branch: 'dev', url: 'https://github.com/Yashshiva75/CI_CD-practice.git'
+                git url: 'https://github.com/Yashshiva75/CI_CD-practice.git', branch: 'dev'
             }
         }
 
@@ -23,24 +23,13 @@ pipeline {
             }
         }
 
-        stage('Deploy Container') {
+        stage('Run Container') {
             steps {
-                echo "Stopping old container if exists..."
+                echo "Running Docker container..."
                 sh "docker stop ${CONTAINER_NAME} || true"
                 sh "docker rm ${CONTAINER_NAME} || true"
-
-                echo "Running new container..."
                 sh "docker run -d -p ${PORT}:${PORT} --name ${CONTAINER_NAME} ${IMAGE_NAME}:${TAG}"
             }
-        }
-    }
-
-    post {
-        success {
-            echo "Deployment successful! Container is running on port ${PORT}."
-        }
-        failure {
-            echo "Deployment failed!"
         }
     }
 }
