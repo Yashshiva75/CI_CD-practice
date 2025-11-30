@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "my-mern-app"
         CONTAINER_NAME = "my-mern-app"
-        PORT = "3000"
+        PORT = "5000"
         TAG = "dev"
     }
 
